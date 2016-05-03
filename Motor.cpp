@@ -35,10 +35,10 @@ void Motor::run() {
 
 				if(position == FULLY_CLOSED_POSITION) {
 					fullyClosed();
-					SafeOutput::safe_output("Garage Reached Closed Position.");
+					SafeOutput::safe_output("Cyclometer Reached Closed Position.");
 				} else if(position == FULLY_OPEN_POSITION) {
 					fullyOpen();
-					SafeOutput::safe_output("Garage Reached Open Position.");
+					SafeOutput::safe_output("Cyclometer Reached Open Position.");
 				}
 				sleep(1);
             } else {

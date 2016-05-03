@@ -6,7 +6,7 @@
 #define GARAGECONTROLLER_GARAGECONTROLLER_H
 
 
-#include "Garage.h"
+#include "CyclometerLaunch.h"
 #include "InputController.h"
 
 class Application {
@@ -14,7 +14,7 @@ public:
 
 	static bool SIMULATION;
 
-    Garage* garage;
+    Cyclometer* garage;
     InputController* inputController;
 
     Application(bool simulation);

@@ -9,7 +9,7 @@
 #include <iosfwd>
 #include <string>
 #include "Event.h"
-#include "Garage.h"
+#include "CyclometerLaunch.h"
 
 class State {
 
@@ -18,9 +18,9 @@ class State {
 public:
     State(std::string name);
 
-    virtual void onEnter(Garage& garage) = 0;
-    virtual void accept(Garage& garage, Event event) = 0;
-    virtual void onExit(Garage& garage) = 0;
+    virtual void onEnter(Cyclometer& garage) = 0;
+    virtual void accept(Cyclometer& garage, Event event) = 0;
+    virtual void onExit(Cyclometer& garage) = 0;
 
     std::string getName();
 

@@ -11,7 +11,7 @@ using namespace std;
 
 
 void *startGarage(void* garage) {
-    ((Garage*) garage)->run();
+    ((Cyclometer*) garage)->run();
 }
 
 void *startInputController(void* inputController) {

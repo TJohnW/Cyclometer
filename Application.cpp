@@ -9,7 +9,7 @@
 bool Application::SIMULATION = false;
 Application::Application(bool simulation) {
 	SIMULATION = simulation;
-    garage = new Garage();
+    garage = new Cyclometer();
     inputController = new InputController(garage);
 }
 

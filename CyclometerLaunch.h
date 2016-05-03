@@ -11,7 +11,7 @@
 #include <pthread.h>
 
 class State;
-class Garage {
+class Cyclometer {
 
     bool enabled;
 
@@ -29,7 +29,7 @@ public:
 
     //static void* run(void *garage);
 
-    Garage();
+    Cyclometer();
 
     void transition(State* state);
 

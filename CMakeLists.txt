@@ -6,14 +6,14 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(SOURCE_FILES
     Application.cpp
     Application.h
-    Closing.cpp
-    Closing.h
-    ClosingStopped.cpp
-    ClosingStopped.h
+        UnitSet.cpp
+        UnitSet.h
+        AutoMode.cpp
+        AutoMode.h
     Event.h
-    Garage.cpp
-    Garage.h
-    GarageController.cc
+        Cyclometer.cpp
+        CyclometerLaunch.h
+        CyclometerLaunch.cc
     InputController.cpp
     InputController.h
     IOPort.cpp
@@ -22,10 +22,10 @@ set(SOURCE_FILES
     Motor.h
     Observer.cpp
     Observer.h
-    Opening.cpp
-    Opening.h
-    OpeningStopped.cpp
-    OpeningStopped.h
+        TireSet.cpp
+        TireSet.h
+        ManualMode.cpp
+        ManualMode.h
     SafeOutput.cpp
     SafeOutput.h
     State.cpp

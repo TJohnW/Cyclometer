@@ -3,12 +3,12 @@
 //
 
 #include "States.h"
-#include "ClosingStopped.h"
-#include "OpeningStopped.h"
-#include "Closing.h"
-#include "Opening.h"
+#include "AutoMode.h"
+#include "ManualMode.h"
+#include "UnitSet.h"
+#include "TireSet.h"
 
-State* States::CLOSING_STOPPED = new ClosingStopped("Closing Stopped");
-State* States::OPENING_STOPPED = new OpeningStopped("Opening Stopped");
-State* States::CLOSING = new Closing("Closing");
-State* States::OPENING = new Opening("Opening");
+State* States::AUTO_MODE = new AutoMode("AutoMode");
+State* States::MANUAL_MODE = new ManualMode("ManualMode");
+State* States::UNIT_SET = new UnitSet("UnitSet");
+State* States::TIRE_SET = new TireSet("TireSet");

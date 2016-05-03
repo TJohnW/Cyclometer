@@ -3,33 +3,33 @@
 //
 
 #include <iostream>
-#include "Closing.h"
+#include "UnitSet.h"
 #include "States.h"
 #include "SafeOutput.h"
 
-void Closing::onEnter(Garage &garage) {
-    SafeOutput::safe_output("State: Closing");
+void UnitSet::onEnter(Cyclometer &garage) {
+    SafeOutput::safe_output("State: UnitSet");
     garage.getMotor()->setDirection(false);
     garage.getMotor()->turnOn();
     SafeOutput::safe_output("IR Beam on.");
 }
 
-void Closing::accept(Garage &garage, Event event) {
+void UnitSet::accept(Cyclometer &garage, Event event) {
     switch(event) {
         case BUTTON_PRESSED:
         case FULLY_CLOSED:
-            garage.transition(States::CLOSING_STOPPED);
+            garage.transition(States::AUTO_MODE);
             break;
         case OVERCURRENT:
         case IR_BEAM:
-            garage.transition(States::OPENING);
+            garage.transition(States::TIRE_SET);
             break;
         default:
             break;
     }
 }
 
-void Closing::onExit(Garage &garage) {
+void UnitSet::onExit(Cyclometer &garage) {
     garage.getMotor()->turnOff();
     SafeOutput::safe_output("IR Beam off.");
 }

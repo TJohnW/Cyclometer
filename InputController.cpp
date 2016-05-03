@@ -8,7 +8,7 @@
 #include "InputController.h"
 #include "SafeOutput.h"
 
-InputController::InputController(Garage* garage) : garage(garage) {
+InputController::InputController(Cyclometer* garage) : garage(garage) {
     enabled = true;
     SafeOutput::safe_output("Initializing InputController");
     garage->getMotor()->attach(this);

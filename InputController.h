@@ -6,16 +6,16 @@
 #define GARAGECONTROLLER_INPUTCONTROLLER_H
 
 
-#include "Garage.h"
+#include "CyclometerLaunch.h"
 
 class InputController : public Observer {
 
-    Garage* garage;
+    Cyclometer* garage;
     bool enabled;
 
 public:
 
-    InputController(Garage* garage);
+    InputController(Cyclometer* garage);
 
     void forwardEvent(Event event);
 

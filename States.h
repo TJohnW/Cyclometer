@@ -7,17 +7,17 @@
 
 
 #include "State.h"
-#include "ClosingStopped.h"
-#include "OpeningStopped.h"
-#include "Closing.h"
-#include "Opening.h"
+#include "AutoMode.h"
+#include "ManualMode.h"
+#include "UnitSet.h"
+#include "TireSet.h"
 
 class States {
 public:
-    static State* CLOSING_STOPPED;
-    static State* OPENING_STOPPED;
-    static State* CLOSING;
-    static State* OPENING;
+    static State* AUTO_MODE;
+    static State* MANUAL_MODE;
+    static State* UNIT_SET;
+    static State* TIRE_SET;
 };
 
 #endif //GARAGECONTROLLER_STATES_H

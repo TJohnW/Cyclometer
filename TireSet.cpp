@@ -3,28 +3,28 @@
 //
 
 #include <iostream>
-#include "Opening.h"
+#include "TireSet.h"
 #include "States.h"
 #include "SafeOutput.h"
 
-void Opening::onEnter(Garage &garage) {
-    SafeOutput::safe_output("State: Opening");
+void TireSet::onEnter(Cyclometer &garage) {
+    SafeOutput::safe_output("State: TireSet");
     garage.getMotor()->setDirection(true);
     garage.getMotor()->turnOn();
 }
 
-void Opening::accept(Garage &garage, Event event) {
+void TireSet::accept(Cyclometer &garage, Event event) {
     switch(event) {
         case FULLY_OPEN:
         case BUTTON_PRESSED:
         case OVERCURRENT:
-            garage.transition(States::OPENING_STOPPED);
+            garage.transition(States::MANUAL_MODE);
             break;
         default:
             break;
     }
 }
 
-void Opening::onExit(Garage &garage) {
+void TireSet::onExit(Cyclometer &garage) {
     garage.getMotor()->turnOff();
 }

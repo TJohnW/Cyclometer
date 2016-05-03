@@ -3,31 +3,31 @@
 //
 
 #include <iostream>
-#include "Garage.h"
+#include "CyclometerLaunch.h"
 #include "States.h"
 #include <pthread.h>
 #include "SafeOutput.h"
 
 
-Garage::Garage() : currentState(States::CLOSING_STOPPED) {
+Cyclometer::Cyclometer() : currentState(States::AUTO_MODE) {
     enabled = true;
     pthread_mutexattr_init(&mutexAttr); //Initialize mutex attribute variable
     pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_ERRORCHECK); //Set mutex attribute to error-checking type
     pthread_mutex_init(&queueMutex, &mutexAttr); //Initialize queue mutex with attributes
 }
 
-void Garage::transition(State *state) {
+void Cyclometer::transition(State *state) {
     this->currentState->onExit(*this);
     this->currentState = state;
     this->currentState->onEnter(*this);
 }
 
 
-Motor* Garage::getMotor() {
+Motor* Cyclometer::getMotor() {
     return &motor;
 }
 
-void Garage::queueEvent(Event event) {
+void Cyclometer::queueEvent(Event event) {
     //Get mutex
     SafeOutput::lock(&queueMutex);
     //Add event
@@ -36,7 +36,7 @@ void Garage::queueEvent(Event event) {
     SafeOutput::unlock(&queueMutex);
 }
 
-void Garage::sendEvent() {
+void Cyclometer::sendEvent() {
     //Get mutex
     SafeOutput::lock(&queueMutex);
     //Send event if one exists
@@ -49,7 +49,7 @@ void Garage::sendEvent() {
 }
 
 
-void Garage::run() {
+void Cyclometer::run() {
     this->currentState->onEnter(*this);
     while(enabled) {
         this->sendEvent();
