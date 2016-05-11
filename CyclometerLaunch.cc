@@ -6,12 +6,13 @@
 #include "Application.h"
 #include "SafeOutput.h"
 #include "IOPort.h"
+#include "Cyclometer.h"
 
 using namespace std;
 
 
-void *startGarage(void* garage) {
-    ((Cyclometer*) garage)->run();
+void *startGarage(void* cyclometer) {
+    ((Cyclometer*) cyclometer)->run();
 }
 
 void *startInputController(void* inputController) {
@@ -42,15 +43,15 @@ int main(int argc, char *argv[]) {
 	SafeOutput out;
 	SafeOutput::init();
 
-	Application garageController(true);
+	Application cyclometerController(true);
 	//pthread_t inputThread;
-	pthread_t garageThread;
+	pthread_t cyclometerThread;
 	pthread_t motorThread;
-	//pthread_create(&inputThread, NULL, startInputController, (void *) garageController.inputController);
-	pthread_create(&garageThread, NULL, startGarage, (void*) garageController.garage);
-	pthread_create(&motorThread, NULL, startMotor, (void*) garageController.garage->getMotor());
+	//pthread_create(&inputThread, NULL, startInputController, (void *) cyclometerController.inputController);
+	pthread_create(&cyclometerThread, NULL, startGarage, (void*) cyclometerController.cyclometer);
+	pthread_create(&motorThread, NULL, startMotor, (void*) cyclometerController.cyclometer->getMotor());
 
-	garageController.inputController->run();
+	cyclometerController.inputController->run();
 
 	return EXIT_SUCCESS;
 }

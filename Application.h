@@ -2,23 +2,25 @@
 // Created by Tristan Whitcher on 3/9/16.
 //
 
-#ifndef GARAGECONTROLLER_GARAGECONTROLLER_H
-#define GARAGECONTROLLER_GARAGECONTROLLER_H
+#ifndef CYCLOMETERCONTROLLER_CYCLOMETERCONTROLLER_H
+#define CYCLOMETERCONTROLLER_CYCLOMETERCONTROLLER_H
 
 
-#include "CyclometerLaunch.h"
 #include "InputController.h"
+#include "Cyclometer.h"
+#include "OutputController.h"
 
 class Application {
 public:
 
 	static bool SIMULATION;
 
-    Cyclometer* garage;
+    Cyclometer* cyclometer;
     InputController* inputController;
+	OutputController* outputController;
 
     Application(bool simulation);
 };
 
 
-#endif //GARAGECONTROLLER_GARAGECONTROLLER_H
+#endif //CYCLOMETERCONTROLLER_CYCLOMETERCONTROLLER_H

@@ -2,8 +2,8 @@
 // Created by Tristan Whitcher on 3/10/16.
 //
 
-#ifndef GARAGECONTROLLER_STATES_H
-#define GARAGECONTROLLER_STATES_H
+#ifndef CYCLOMETERCONTROLLER_STATES_H
+#define CYCLOMETERCONTROLLER_STATES_H
 
 
 #include "State.h"
@@ -20,4 +20,4 @@ public:
     static State* TIRE_SET;
 };
 
-#endif //GARAGECONTROLLER_STATES_H
+#endif //CYCLOMETERCONTROLLER_STATES_H

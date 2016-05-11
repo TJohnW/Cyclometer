@@ -2,8 +2,8 @@
 // Created by Tristan Whitcher on 3/10/16.
 //
 
-#ifndef GARAGECONTROLLER_SUBJECT_H
-#define GARAGECONTROLLER_SUBJECT_H
+#ifndef CYCLOMETERCONTROLLER_SUBJECT_H
+#define CYCLOMETERCONTROLLER_SUBJECT_H
 
 
 #include <vector>
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //GARAGECONTROLLER_SUBJECT_H
+#endif //CYCLOMETERCONTROLLER_SUBJECT_H

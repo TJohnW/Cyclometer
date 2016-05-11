@@ -7,16 +7,16 @@
 #include <termios.h>
 #include "InputController.h"
 #include "SafeOutput.h"
+#include "Cyclometer.h"
 
-InputController::InputController(Cyclometer* garage) : garage(garage) {
+InputController::InputController(Cyclometer* cyclometer) : cyclometer(cyclometer) {
     enabled = true;
     SafeOutput::safe_output("Initializing InputController");
-    garage->getMotor()->attach(this);
 }
 
 
 void InputController::forwardEvent(Event event) {
-    garage->queueEvent(event);
+    cyclometer->queueEvent(event);
 }
 
 void InputController::update(Event event) {
@@ -24,7 +24,6 @@ void InputController::update(Event event) {
 }
 
 void InputController::overcurrent() {
-    garage->getMotor()->overcurrent();
 }
 
 void InputController::ir_beam() {

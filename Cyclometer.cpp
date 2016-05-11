@@ -3,7 +3,6 @@
 //
 
 #include <iostream>
-#include "CyclometerLaunch.h"
 #include "States.h"
 #include <pthread.h>
 #include "SafeOutput.h"
@@ -20,11 +19,6 @@ void Cyclometer::transition(State *state) {
     this->currentState->onExit(*this);
     this->currentState = state;
     this->currentState->onEnter(*this);
-}
-
-
-Motor* Cyclometer::getMotor() {
-    return &motor;
 }
 
 void Cyclometer::queueEvent(Event event) {

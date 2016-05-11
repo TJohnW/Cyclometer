@@ -6,25 +6,25 @@
 #include "TireSet.h"
 #include "States.h"
 #include "SafeOutput.h"
+#include "Cyclometer.h"
 
-void TireSet::onEnter(Cyclometer &garage) {
+void TireSet::onEnter(Cyclometer &cyclometer) {
     SafeOutput::safe_output("State: TireSet");
-    garage.getMotor()->setDirection(true);
-    garage.getMotor()->turnOn();
+    // do stuff
 }
 
-void TireSet::accept(Cyclometer &garage, Event event) {
+void TireSet::accept(Cyclometer &cyclometer, Event event) {
     switch(event) {
         case FULLY_OPEN:
         case BUTTON_PRESSED:
         case OVERCURRENT:
-            garage.transition(States::MANUAL_MODE);
+            cyclometer.transition(States::MANUAL_MODE);
             break;
         default:
             break;
     }
 }
 
-void TireSet::onExit(Cyclometer &garage) {
-    garage.getMotor()->turnOff();
+void TireSet::onExit(Cyclometer &cyclometer) {
+    // do stuff
 }

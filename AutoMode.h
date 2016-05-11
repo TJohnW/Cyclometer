@@ -2,8 +2,8 @@
 // Created by Tristan Whitcher on 3/10/16.
 //
 
-#ifndef GARAGECONTROLLER_CONCRETESTATE_H
-#define GARAGECONTROLLER_CONCRETESTATE_H
+#ifndef CYCLOMETERCONTROLLER_AUTOMODE_H
+#define CYCLOMETERCONTROLLER_AUTOMODE_H
 
 
 #include "State.h"
@@ -13,12 +13,12 @@ class AutoMode : public State {
 public:
     AutoMode(const std::string &name) : State(name) { }
 
-    virtual void onEnter(Cyclometer &garage);
+    virtual void onEnter(Cyclometer &cyclometer);
 
-    virtual void accept(Cyclometer &garage, Event event);
+    virtual void accept(Cyclometer &cyclometer, Event event);
 
-    virtual void onExit(Cyclometer &garage);
+    virtual void onExit(Cyclometer &cyclometer);
 };
 
 
-#endif //GARAGECONTROLLER_CONCRETESTATE_H
+#endif //CYCLOMETERCONTROLLER_AUTOMODE_H

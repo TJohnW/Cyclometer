@@ -8,20 +8,20 @@
 #include "SafeOutput.h"
 
 
-void ManualMode::onEnter(Cyclometer &garage) {
+void ManualMode::onEnter(Cyclometer &cyclometer) {
     SafeOutput::safe_output("State: ManualMode");
 }
 
-void ManualMode::accept(Cyclometer &garage, Event event) {
+void ManualMode::accept(Cyclometer &cyclometer, Event event) {
     switch(event) {
-        case BUTTON_PRESSED:
-            garage.transition(States::UNIT_SET);
+        case FULL_RESET:
+            cyclometer.transition(States::UNIT_SET);
             break;
         default:
             break;
     }
 }
 
-void ManualMode::onExit(Cyclometer &garage) {
+void ManualMode::onExit(Cyclometer &cyclometer) {
 
 }

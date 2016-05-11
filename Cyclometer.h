@@ -2,13 +2,13 @@
 // Created by Tristan Whitcher on 3/9/16.
 //
 
-#ifndef GARAGECONTROLLER_GARAGE_H
-#define GARAGECONTROLLER_GARAGE_H
+#ifndef CYCLOMETERCONTROLLER_CYCLOMETER_H
+#define CYCLOMETERCONTROLLER_CYCLOMETER_H
 
 
 #include <queue>
-#include "Motor.h"
 #include <pthread.h>
+#include "Event.h"
 
 class State;
 class Cyclometer {
@@ -16,7 +16,6 @@ class Cyclometer {
     bool enabled;
 
     State* currentState;
-    Motor motor;
 
     std::queue<Event> eventQueue;
 
@@ -27,13 +26,11 @@ class Cyclometer {
 
 public:
 
-    //static void* run(void *garage);
+    //static void* run(void *cyclometer);
 
     Cyclometer();
 
     void transition(State* state);
-
-    Motor* getMotor();
 
     void queueEvent(Event event);
 
@@ -41,4 +38,4 @@ public:
 };
 
 
-#endif //GARAGECONTROLLER_GARAGE_H
+#endif //CYCLOMETERCONTROLLER_CYCLOMETER_H

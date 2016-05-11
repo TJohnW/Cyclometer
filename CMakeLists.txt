@@ -12,14 +12,12 @@ set(SOURCE_FILES
         AutoMode.h
     Event.h
         Cyclometer.cpp
-        CyclometerLaunch.h
+        Cyclometer.h
         CyclometerLaunch.cc
     InputController.cpp
     InputController.h
     IOPort.cpp
     IOPort.h
-    Motor.cpp
-    Motor.h
     Observer.cpp
     Observer.h
         TireSet.cpp
@@ -33,6 +31,6 @@ set(SOURCE_FILES
     States.cpp
     States.h
     Subject.cpp
-    Subject.h)
+    Subject.h OutputController.cpp OutputController.h)
 
 add_executable(Cyclometer ${SOURCE_FILES})

@@ -7,29 +7,29 @@
 #include "States.h"
 #include "SafeOutput.h"
 
-void UnitSet::onEnter(Cyclometer &garage) {
+void UnitSet::onEnter(Cyclometer &cyclometer) {
     SafeOutput::safe_output("State: UnitSet");
-    garage.getMotor()->setDirection(false);
-    garage.getMotor()->turnOn();
+    cyclometer.getMotor()->setDirection(false);
+    cyclometer.getMotor()->turnOn();
     SafeOutput::safe_output("IR Beam on.");
 }
 
-void UnitSet::accept(Cyclometer &garage, Event event) {
+void UnitSet::accept(Cyclometer &cyclometer, Event event) {
     switch(event) {
         case BUTTON_PRESSED:
         case FULLY_CLOSED:
-            garage.transition(States::AUTO_MODE);
+            cyclometer.transition(States::AUTO_MODE);
             break;
         case OVERCURRENT:
         case IR_BEAM:
-            garage.transition(States::TIRE_SET);
+            cyclometer.transition(States::TIRE_SET);
             break;
         default:
             break;
     }
 }
 
-void UnitSet::onExit(Cyclometer &garage) {
-    garage.getMotor()->turnOff();
+void UnitSet::onExit(Cyclometer &cyclometer) {
+    cyclometer.getMotor()->turnOff();
     SafeOutput::safe_output("IR Beam off.");
 }

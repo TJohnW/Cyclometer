@@ -5,11 +5,13 @@
 #include <pthread.h>
 #include <iostream>
 #include "Application.h"
+#include "Cyclometer.h"
 
 bool Application::SIMULATION = false;
 Application::Application(bool simulation) {
 	SIMULATION = simulation;
-    garage = new Cyclometer();
-    inputController = new InputController(garage);
+    cyclometer = new Cyclometer();
+    inputController = new InputController(cyclometer);
+    outputController = new OutputController(cyclometer);
 }
 

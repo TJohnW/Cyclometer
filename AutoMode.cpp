@@ -7,20 +7,20 @@
 #include "States.h"
 #include "SafeOutput.h"
 
-void AutoMode::onEnter(Cyclometer &garage) {
+void AutoMode::onEnter(Cyclometer &cyclometer) {
     SafeOutput::safe_output("State: AutoMode");
 }
 
-void AutoMode::accept(Cyclometer &garage, Event event) {
+void AutoMode::accept(Cyclometer &cyclometer, Event event) {
     switch(event) {
         case BUTTON_PRESSED:
-            garage.transition(States::TIRE_SET);
+            cyclometer.transition(States::TIRE_SET);
             break;
         default:
             break;
     }
 }
 
-void AutoMode::onExit(Cyclometer &garage) {
+void AutoMode::onExit(Cyclometer &cyclometer) {
 
 }
