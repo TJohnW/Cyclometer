@@ -3,10 +3,6 @@
 //
 
 #include "States.h"
-#include "AutoMode.h"
-#include "ManualMode.h"
-#include "UnitSet.h"
-#include "TireSet.h"
 
 State* States::AUTO_MODE = new AutoMode("AutoMode");
 State* States::MANUAL_MODE = new ManualMode("ManualMode");

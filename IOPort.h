@@ -18,16 +18,15 @@
 
 
 #define INPUT_FULL_OPEN 0
-#define INPUT_FULL_CLOSE 0
-#define INPUT_IR_BROKEN 0
-#define INPUT_OVERCURRENT 0
-#define INPUT_REMOTE_BUTTON 0
+#define INPUT_FULL_CLOSE 1
+#define INPUT_IR_BROKEN 3
+#define INPUT_OVERCURRENT 5
+#define INPUT_REMOTE_BUTTON 4
 
 #define OUTPUT_MOTOR_UP 0
-#define OUTPUT_MOTOR_DOWN 0
-#define OUTPUT_IR_ON 0
-
-#define OUTPUT_RESET 0
+#define OUTPUT_MOTOR_DOWN 1
+#define OUTPUT_IR_ON 2
+#define OUTPUT_RESET 3
 
 
 
@@ -37,11 +36,28 @@ public:
     static uintptr_t A_HANDLE;
     static uintptr_t B_HANDLE;
 
-    static bool isSetBit(uintptr_t byte, int bit);
-    static void setBit(uintptr_t byte, int bit, bool value);
+    static bool isSetBit(uintptr_t& port, int bit);
+    static void setBit(uintptr_t& port, int bit, bool value);
+
+    static bool consume(uintptr_t& port, int bit);
 
     static bool IS_FULL_OPEN();
     static bool IS_FULL_CLOSE();
+    static bool IS_IR_BROKEN();
+    static bool IS_OVERCURRENT();
+    static bool IS_REMOTE_BUTTON();
+
+    static void MOTOR_UP_ON();
+    static void MOTOR_UP_OFF();
+
+    static void MOTOR_DOWN_ON();
+    static void MOTOR_DOWN_OFF();
+
+    static void IR_ON();
+    static void IR_OFF();
+
+    static void RESET_ON();
+    static void RESET_OFF();
 
     IOPort();
 

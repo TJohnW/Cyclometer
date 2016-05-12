@@ -7,7 +7,6 @@
 #include <termios.h>
 #include "InputController.h"
 #include "SafeOutput.h"
-#include "Cyclometer.h"
 
 InputController::InputController(Cyclometer* cyclometer) : cyclometer(cyclometer) {
     enabled = true;
