@@ -8,7 +8,7 @@
 #include <stdint.h>
 #include <sys/mman.h>
 #include <bitset>
-#include <hw/inout.h>
+//#include <hw/inout.h>
 
 #define IO_PORT_SIZE 1
 #define IO_CONTROL_REGISTER 0x28B

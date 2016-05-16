@@ -6,55 +6,82 @@
 #include <stdio.h>
 #include <termios.h>
 #include "InputController.h"
-#include "SafeOutput.h"
 
-InputController::InputController(Cyclometer* cyclometer) : cyclometer(cyclometer) {
+Cyclometer* InputController::cyclometer;
+CyclometerCalculations* InputController::calculations;
+bool InputController::enabled;
+
+
+static void error_callback(int error, const char* description)
+{
+    fputs(description, stderr);
+}
+
+
+InputController::InputController(Cyclometer* cyclometer, CyclometerCalculations *pCalculations) {
+    InputController::cyclometer = cyclometer;
+    InputController::calculations = pCalculations;
     enabled = true;
-    SafeOutput::safe_output("Initializing InputController");
 }
 
 
 void InputController::forwardEvent(Event event) {
-    cyclometer->queueEvent(event);
-}
-
-void InputController::update(Event event) {
-    forwardEvent(event);
-}
-
-void InputController::overcurrent() {
-}
-
-void InputController::ir_beam() {
-    forwardEvent(IR_BEAM);
-}
-
-void InputController::button_pressed() {
-    forwardEvent(BUTTON_PRESSED);
+    if(event == PULSE) {
+        // pulse event handled by cyclometer calculator
+        time_t now;
+        time(&now);
+        calculations->queuePulse(now);
+    } else {
+        cyclometer->queueEvent(event);
+    }
 }
 
 void InputController::run() {
-    while(enabled) {
-        char c;
-        std::cin >> c;
-
-        if(c == '\n') {
-            continue;
-        }
-
-        SafeOutput::safe_output(std::string(1, (char) c) + " received.");
-        switch((char) c) {
-            case 'm':
-                this->overcurrent();
-                break;
-            case 'i':
-                this->ir_beam();
-                break;
-            case 'r':
-                this->button_pressed();
-                break;
-            default:
-                break;
-        }
+    GLFWwindow *window;
+    glfwSetErrorCallback(error_callback);
+    if (!glfwInit())
+        exit(EXIT_FAILURE);
+    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+    if (!window) {
+        glfwTerminate();
+        exit(EXIT_FAILURE);
     }
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    glfwSetKeyCallback(window, key_callback);
+
+    while (!glfwWindowShouldClose(window)) {
+
+        float ratio;
+
+        int width, height;
+
+        glfwGetFramebufferSize(window, &width, &height);
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
+    }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
+
+    exit(EXIT_SUCCESS);
 }
+
+void InputController::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+
+
+    if (key == GLFW_KEY_1 && action == GLFW_RELEASE)
+        forwardEvent(MODE_BUTTON);
+
+    if (key == GLFW_KEY_2 && action == GLFW_RELEASE)
+        forwardEvent(SET_BUTTON);
+
+    if (key == GLFW_KEY_0 && action == GLFW_RELEASE)
+        forwardEvent(PULSE);
+}
+
+

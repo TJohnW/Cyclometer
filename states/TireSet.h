@@ -6,8 +6,8 @@
 #define CYCLOMETERCONTROLLER_TIRESET_H
 
 
-#include "State.h"
-#include "Cyclometer.h"
+#include "../util/State.h"
+#include "../Cyclometer.h"
 
 class TireSet : public State {
 
@@ -19,6 +19,13 @@ public:
     virtual void accept(Cyclometer &cyclometer, Event event);
 
     virtual void onExit(Cyclometer &cyclometer);
+
+    void updateDisplayData(Cyclometer &cyclometer);
+
+private:
+    bool isTicking = false;
+
+    void incrementCircumference(Cyclometer &cyclometer);
 };
 
 

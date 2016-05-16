@@ -6,7 +6,7 @@
 #define CYCLOMETERCONTROLLER_AUTOMODE_H
 
 
-#include "State.h"
+#include "../util/State.h"
 
 class AutoMode : public State {
 

@@ -4,33 +4,31 @@ project(Cyclometer)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-    Application.cpp
-    Application.h
-        UnitSet.cpp
-        UnitSet.h
-        AutoMode.cpp
-        AutoMode.h
+        states/UnitSet.cpp
+        states/UnitSet.h
+        states/AutoMode.cpp
+        states/AutoMode.h
     Event.h
         Cyclometer.cpp
         Cyclometer.h
         CyclometerLaunch.cc
     InputController.cpp
     InputController.h
-    IOPort.cpp
-    IOPort.h
-    Observer.cpp
-    Observer.h
-        TireSet.cpp
-        TireSet.h
-        ManualMode.cpp
-        ManualMode.h
-    SafeOutput.cpp
-    SafeOutput.h
-    State.cpp
-    State.h
-    States.cpp
-    States.h
-    Subject.cpp
-    Subject.h OutputController.cpp OutputController.h)
+        states/TireSet.cpp
+        states/TireSet.h
+        states/ManualMode.cpp
+        states/ManualMode.h
+        ThreadUtils.cpp
+        ThreadUtils.h
+        util/State.cpp
+        util/State.h
+        states/States.cpp
+        states/States.h
+        OutputController.cpp OutputController.h CyclometerCalculations.cpp CyclometerCalculations.h CyclometerData.cpp CyclometerData.h)
+
+link_directories(
+        "/usr/local/lib"
+)
 
 add_executable(Cyclometer ${SOURCE_FILES})
+target_link_libraries(Cyclometer glfw)

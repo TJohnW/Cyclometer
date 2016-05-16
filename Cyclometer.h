@@ -9,6 +9,7 @@
 #include <queue>
 #include <pthread.h>
 #include "Event.h"
+#include "CyclometerData.h"
 
 class State;
 class Cyclometer {
@@ -24,6 +25,17 @@ class Cyclometer {
     pthread_mutexattr_t mutexAttr; //Mutex attribute variable
     pthread_mutex_t queueMutex; //Mutex for event queue
 
+    CyclometerData* cyclometerData;
+
+    /**
+     * Display modes:
+     * 0: in configuration
+     * 1: Current speed and Average speed
+     * 2: Distance
+     * 3: elapsed time
+     */
+    int displayMode = 0;
+
 public:
 
     //static void* run(void *cyclometer);
@@ -35,6 +47,10 @@ public:
     void queueEvent(Event event);
 
     void run();
+
+    CyclometerData* getCyclometerData();
+
+    State *priorState;
 };
 
 

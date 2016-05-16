@@ -6,7 +6,7 @@
 #define CYCLOMETERCONTROLLER_MANUALMODE_H
 
 
-#include "State.h"
+#include "../util/State.h"
 
 class ManualMode : public State {
 

@@ -5,17 +5,13 @@
 #include <iostream>
 #include "AutoMode.h"
 #include "States.h"
-#include "SafeOutput.h"
+#include "../ThreadUtils.h"
 
 void AutoMode::onEnter(Cyclometer &cyclometer) {
-    SafeOutput::safe_output("State: AutoMode");
 }
 
 void AutoMode::accept(Cyclometer &cyclometer, Event event) {
     switch(event) {
-        case BUTTON_PRESSED:
-            cyclometer.transition(States::TIRE_SET);
-            break;
         default:
             break;
     }

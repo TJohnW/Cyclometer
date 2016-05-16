@@ -8,8 +8,8 @@
 
 #include <iosfwd>
 #include <string>
-#include "Event.h"
-#include "Cyclometer.h"
+#include "../Event.h"
+#include "../Cyclometer.h"
 
 class State {
 

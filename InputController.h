@@ -6,29 +6,25 @@
 #define CYCLOMETERCONTROLLER_INPUTCONTROLLER_H
 
 
+#include <GLFW/glfw3.h>
 #include "Cyclometer.h"
-#include "Observer.h"
+#include "CyclometerCalculations.h"
 
-class InputController : public Observer {
+class InputController {
 
-    Cyclometer* cyclometer;
-    bool enabled;
+    static Cyclometer* cyclometer;
+    static CyclometerCalculations *calculations;
+    static bool enabled;
 
 public:
 
-    InputController(Cyclometer* cyclometer);
+    InputController(Cyclometer *pCyclometer, CyclometerCalculations *pCalculations);
 
-    void forwardEvent(Event event);
+    static void forwardEvent(Event event);
 
-    void update(Event event);
+    static void run();
 
-    void overcurrent();
-
-    void ir_beam();
-
-    void button_pressed();
-
-    void run();
+    static void key_callback(struct GLFWwindow *window, int key, int scancode, int action, int mods);
 
 };
 
