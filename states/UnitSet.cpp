@@ -10,8 +10,8 @@
 
 void UnitSet::onEnter(Cyclometer &cyclometer) {
     std::cout << this->getName() << std::endl;
-    cyclometer.getCyclometerData()->fullReset();
-    cyclometer.getCyclometerData()->kilometers = true;
+    cyclometer.getCalculations()->fullReset();
+    cyclometer.getCalculations()->kilometers = true;
     updateDisplayData(cyclometer);
 }
 
@@ -35,7 +35,7 @@ void UnitSet::accept(Cyclometer &cyclometer, Event event) {
 void UnitSet::onExit(Cyclometer &cyclometer) { }
 
 void UnitSet::updateDisplayData(Cyclometer &cyclometer) {
-    CyclometerData* data = cyclometer.getCyclometerData();
+    Calculations* data = cyclometer.getCalculations();
     OutputController::resetDisplay();
     if(data->kilometers) {
         OutputController::digitFour = 1;
@@ -45,7 +45,7 @@ void UnitSet::updateDisplayData(Cyclometer &cyclometer) {
 }
 
 void UnitSet::toggleUnits(Cyclometer &cyclometer) {
-    cyclometer.getCyclometerData()->kilometers = !cyclometer.getCyclometerData()->kilometers;
+    cyclometer.getCalculations()->kilometers = !cyclometer.getCalculations()->kilometers;
 }
 
 
@@ -57,5 +57,4 @@ void UnitSet::toggleUnits(Cyclometer &cyclometer) {
     case SET_BUTTON: break;
     case START_STOP_BUTTON: break;
     default: break;
-
-         */
+ */

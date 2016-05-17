@@ -10,7 +10,7 @@
 void TireSet::onEnter(Cyclometer &cyclometer) {
 
     std::cout << this->getName() << std::endl;
-    cyclometer.getCyclometerData()->circumference = 210;
+    cyclometer.getCalculations()->circumference = 210;
     updateDisplayData(cyclometer);
 }
 
@@ -32,11 +32,7 @@ void TireSet::accept(Cyclometer &cyclometer, Event event) {
             incrementCircumference(cyclometer);
             break;
         case SET_BUTTON:
-            if(cyclometer.priorState == States::UNIT_SET)
-                cyclometer.transition(States::MANUAL_MODE);
-            else
-                cyclometer.transition(cyclometer.priorState);
-            break;
+            cyclometer.transition(States::OPERATING);
         case START_STOP_BUTTON: break;
         default: break;
     }
@@ -47,15 +43,15 @@ void TireSet::onExit(Cyclometer &cyclometer) {
 }
 
 void TireSet::updateDisplayData(Cyclometer &cyclometer) {
-    CyclometerData* data = cyclometer.getCyclometerData();
+    Calculations* data = cyclometer.getCalculations();
     OutputController::resetDisplay();
-    data->setSegments(data->circumference);
+    OutputController::setSegments(data->circumference);
 }
 
 void TireSet::incrementCircumference(Cyclometer &cyclometer) {
-    cyclometer.getCyclometerData()->circumference++;
-    if (cyclometer.getCyclometerData()->circumference > 220) {
-        cyclometer.getCyclometerData()->circumference = 190;
+    cyclometer.getCalculations()->circumference++;
+    if (cyclometer.getCalculations()->circumference > 220) {
+        cyclometer.getCalculations()->circumference = 190;
     }
     updateDisplayData(cyclometer);
 }

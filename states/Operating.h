@@ -2,16 +2,16 @@
 // Created by Tristan Whitcher on 3/10/16.
 //
 
-#ifndef CYCLOMETERCONTROLLER_AUTOMODE_H
-#define CYCLOMETERCONTROLLER_AUTOMODE_H
+#ifndef CYCLOMETERCONTROLLER_OPERATING_H
+#define CYCLOMETERCONTROLLER_OPERATING_H
 
 
 #include "../util/State.h"
 
-class AutoMode : public State {
+class Operating : public State {
 
 public:
-    AutoMode(const std::string &name) : State(name) { }
+    Operating(const std::string &name) : State(name) { }
 
     virtual void onEnter(Cyclometer &cyclometer);
 
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //CYCLOMETERCONTROLLER_AUTOMODE_H
+#endif //CYCLOMETERCONTROLLER_OPERATING_H

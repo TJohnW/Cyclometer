@@ -6,7 +6,7 @@
 #include "Cyclometer.h"
 #include "InputController.h"
 #include "OutputController.h"
-#include "CyclometerCalculations.h"
+#include "Calculations.h"
 
 using namespace std;
 
@@ -24,7 +24,7 @@ void *startOutput(void* output) {
 }
 
 void *startCalculations(void* calc) {
-	((CyclometerCalculations*) calc)->run();
+	((Calculations*) calc)->run();
 }
 
 
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 
 	Cyclometer* cyclometer = new Cyclometer();
 	OutputController* outputController = new OutputController(cyclometer);
-	CyclometerCalculations* calculations = new CyclometerCalculations(cyclometer->getCyclometerData());
+	Calculations* calculations = cyclometer->getCalculations();
 	InputController* inputController = new InputController(cyclometer, calculations);
 
 	pthread_t cyclometerThread;

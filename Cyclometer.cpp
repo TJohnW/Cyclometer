@@ -6,7 +6,6 @@
 #include "states/States.h"
 #include <pthread.h>
 #include "ThreadUtils.h"
-#include "CyclometerData.h"
 
 
 Cyclometer::Cyclometer() : currentState(States::UNIT_SET) {
@@ -14,7 +13,7 @@ Cyclometer::Cyclometer() : currentState(States::UNIT_SET) {
     pthread_mutexattr_init(&mutexAttr); //Initialize mutex attribute variable
     pthread_mutexattr_settype(&mutexAttr, PTHREAD_MUTEX_ERRORCHECK); //Set mutex attribute to error-checking type
     pthread_mutex_init(&queueMutex, &mutexAttr); //Initialize queue mutex with attributes
-    cyclometerData = new CyclometerData();
+    cyclometerCalculations = new Calculations();
 }
 
 void Cyclometer::transition(State *state) {
@@ -53,8 +52,8 @@ void Cyclometer::run() {
     }
 }
 
-CyclometerData* Cyclometer::getCyclometerData() {
-    return cyclometerData;
+Calculations *Cyclometer::getCalculations() {
+    return cyclometerCalculations;
 }
 
 

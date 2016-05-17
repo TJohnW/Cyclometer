@@ -8,17 +8,17 @@
 
 #include <GLFW/glfw3.h>
 #include "Cyclometer.h"
-#include "CyclometerCalculations.h"
+#include "Calculations.h"
 
 class InputController {
 
     static Cyclometer* cyclometer;
-    static CyclometerCalculations *calculations;
+    static Calculations *calculations;
     static bool enabled;
 
 public:
 
-    InputController(Cyclometer *pCyclometer, CyclometerCalculations *pCalculations);
+    InputController(Cyclometer *pCyclometer, Calculations *pCalculations);
 
     static void forwardEvent(Event event);
 

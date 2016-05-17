@@ -7,15 +7,13 @@
 
 
 #include "../util/State.h"
-#include "AutoMode.h"
-#include "ManualMode.h"
+#include "Operating.h"
 #include "UnitSet.h"
 #include "TireSet.h"
 
 class States {
 public:
-    static State* AUTO_MODE;
-    static State* MANUAL_MODE;
+    static State* OPERATING;
     static State* UNIT_SET;
     static State* TIRE_SET;
 };

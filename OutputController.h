@@ -26,6 +26,7 @@ public:
     static std::atomic<int> digitFour; // right digit
     static std::atomic_bool decimalFour;
 
+    static std::atomic_bool updateValues;
 
     OutputController(Cyclometer *pCyclometer);
 
@@ -40,6 +41,16 @@ public:
     static void setTimeDisplay(Cyclometer *pCyclometer);
 
     static void setDistanceDisplay(Cyclometer *pCyclometer);
+
+    static void setSegments(int value);
+
+    static std::deque<int, std::allocator<int>> numToDeque(int value);
+
+    static void padToLength(std::deque<int, std::allocator<int>> *deque, int length, int padValue);
+
+    static void wheelLED(bool b);
+
+    static void calcLED(bool toggle);
 };
 
 

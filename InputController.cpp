@@ -8,7 +8,7 @@
 #include "InputController.h"
 
 Cyclometer* InputController::cyclometer;
-CyclometerCalculations* InputController::calculations;
+Calculations* InputController::calculations;
 bool InputController::enabled;
 
 
@@ -18,7 +18,7 @@ static void error_callback(int error, const char* description)
 }
 
 
-InputController::InputController(Cyclometer* cyclometer, CyclometerCalculations *pCalculations) {
+InputController::InputController(Cyclometer* cyclometer, Calculations *pCalculations) {
     InputController::cyclometer = cyclometer;
     InputController::calculations = pCalculations;
     enabled = true;
@@ -30,7 +30,7 @@ void InputController::forwardEvent(Event event) {
         // pulse event handled by cyclometer calculator
         time_t now;
         time(&now);
-        calculations->queuePulse(now);
+        calculations->pulse();
     } else {
         cyclometer->queueEvent(event);
     }
@@ -41,7 +41,7 @@ void InputController::run() {
     glfwSetErrorCallback(error_callback);
     if (!glfwInit())
         exit(EXIT_FAILURE);
-    window = glfwCreateWindow(640, 480, "Simple example", NULL, NULL);
+    window = glfwCreateWindow(10, 10, "Simple example", NULL, NULL);
     if (!window) {
         glfwTerminate();
         exit(EXIT_FAILURE);
@@ -73,12 +73,14 @@ void InputController::key_callback(GLFWwindow* window, int key, int scancode, in
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
 
-
     if (key == GLFW_KEY_1 && action == GLFW_RELEASE)
         forwardEvent(MODE_BUTTON);
 
     if (key == GLFW_KEY_2 && action == GLFW_RELEASE)
         forwardEvent(SET_BUTTON);
+
+    if (key == GLFW_KEY_3 && action == GLFW_RELEASE)
+        forwardEvent(START_STOP_BUTTON);
 
     if (key == GLFW_KEY_0 && action == GLFW_RELEASE)
         forwardEvent(PULSE);

@@ -9,7 +9,7 @@
 #include <queue>
 #include <pthread.h>
 #include "Event.h"
-#include "CyclometerData.h"
+#include "Calculations.h"
 
 class State;
 class Cyclometer {
@@ -20,12 +20,20 @@ class Cyclometer {
 
     std::queue<Event> eventQueue;
 
-    void sendEvent();
-
     pthread_mutexattr_t mutexAttr; //Mutex attribute variable
     pthread_mutex_t queueMutex; //Mutex for event queue
 
-    CyclometerData* cyclometerData;
+    Calculations* cyclometerCalculations;
+
+    void sendEvent();
+
+public:
+
+    //static void* run(void *cyclometer);
+
+    Calculations* getCalculations();
+
+    State* priorState;
 
     /**
      * Display modes:
@@ -34,11 +42,7 @@ class Cyclometer {
      * 2: Distance
      * 3: elapsed time
      */
-    int displayMode = 0;
-
-public:
-
-    //static void* run(void *cyclometer);
+    std::atomic<int> displayMode = {0};
 
     Cyclometer();
 
@@ -48,9 +52,6 @@ public:
 
     void run();
 
-    CyclometerData* getCyclometerData();
-
-    State *priorState;
 };
 
 
