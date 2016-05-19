@@ -6,9 +6,12 @@
 #define CYCLOMETERCONTROLLER_INPUTCONTROLLER_H
 
 
-#include <GLFW/glfw3.h>
 #include "Cyclometer.h"
 #include "Calculations.h"
+
+#define SET_BUTTON_IN (0)
+#define START_STOP_BUTTON_IN (1)
+#define MODE_BUTTON_IN (2)
 
 class InputController {
 
@@ -22,10 +25,15 @@ public:
 
     static void forwardEvent(Event event);
 
-    static void run();
+    void run();
 
-    static void key_callback(struct GLFWwindow *window, int key, int scancode, int action, int mods);
+    static std::atomic_bool buttons[3];
 
+    static bool waitTwoValidate(bool set, bool mode, bool startStop);
+
+    static long timevaldiff(timeval *starttime, timeval *finishtime);
+
+    bool waitForClear();
 };
 
 

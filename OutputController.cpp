@@ -48,9 +48,15 @@ void OutputController::run() {
         if(decimalFour)
             out += ".";
 
+        out += "   ";
+
+        out += (cyclometer->getCalculations()->mode) ? "Auto" : "Manual";
+        out += "\t";
+        out += (cyclometer->getCalculations()->shouldCalculate) ? "Calculating" : "Not Calculating";
+
         std::cout << out << std::endl;
 
-        sleep(1);
+        usleep(1000000);
 
         if(updateValues) {
             updateDisplayValues(cyclometer->displayMode);

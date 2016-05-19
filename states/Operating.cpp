@@ -14,6 +14,14 @@ void Operating::onEnter(Cyclometer &cyclometer) {
 
 void Operating::accept(Cyclometer &cyclometer, Event event) {
     switch(event) {
+        case FULL_RESET:
+            cyclometer.transition(States::UNIT_SET);
+            break;
+
+        case RESET_TRIP:
+            cyclometer.getCalculations()->tripReset();
+            break;
+
         case MODE_BUTTON:
             if(cyclometer.displayMode == 3) {
                 cyclometer.displayMode = 1;
@@ -26,6 +34,15 @@ void Operating::accept(Cyclometer &cyclometer, Event event) {
             if(cyclometer.displayMode == 1 || cyclometer.displayMode == 3) {
                 cyclometer.getCalculations()->mode = !cyclometer.getCalculations()->mode;
 
+                std::cout << "Now in " << ((cyclometer.getCalculations()->mode) ? "Auto" : "Manual") << " mode" << std::endl;
+                if(!cyclometer.getCalculations()->mode) {
+                    //manual
+                    cyclometer.getCalculations()->shouldCalculate = false;
+                    // turn off calculations
+                }
+
+            } else {
+                cyclometer.transition(States::TIRE_SET);
             }
             break;
         case START_STOP_BUTTON:

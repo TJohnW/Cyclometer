@@ -10,7 +10,6 @@
 void TireSet::onEnter(Cyclometer &cyclometer) {
 
     std::cout << this->getName() << std::endl;
-    cyclometer.getCalculations()->circumference = 210;
     updateDisplayData(cyclometer);
 }
 

@@ -21,11 +21,6 @@ public:
     std::atomic_bool kilometers = {true};
 
     /**
-     * Indicates whether or not the wheel is rotating based on the bounds defined in the spec
-     */
-    std::atomic_bool wheelRotating = {false};
-
-    /**
      * This is updated by the state machine when changing states. Represents which mode in
      * by default mode = true means AUTO MODE
      */
@@ -69,11 +64,6 @@ private:
     int pulseIndex = 0;
 
     int distanceCount = 0;
-
-    pthread_mutexattr_t mutexAttr; //Mutex attribute variable
-    pthread_mutex_t queueMutex; //Mutex for event queue
-
-    std::deque<time_t> pulseDeque;
 
     void calculate();
 

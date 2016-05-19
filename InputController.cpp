@@ -5,31 +5,22 @@
 #include <iostream>
 #include <stdio.h>
 #include <termios.h>
+#include <sys/time.h>
 #include "InputController.h"
 
 Cyclometer* InputController::cyclometer;
 Calculations* InputController::calculations;
-bool InputController::enabled;
-
-
-static void error_callback(int error, const char* description)
-{
-    fputs(description, stderr);
-}
+std::atomic_bool InputController::buttons[3];
 
 
 InputController::InputController(Cyclometer* cyclometer, Calculations *pCalculations) {
     InputController::cyclometer = cyclometer;
     InputController::calculations = pCalculations;
-    enabled = true;
 }
 
 
 void InputController::forwardEvent(Event event) {
     if(event == PULSE) {
-        // pulse event handled by cyclometer calculator
-        time_t now;
-        time(&now);
         calculations->pulse();
     } else {
         cyclometer->queueEvent(event);
@@ -37,53 +28,108 @@ void InputController::forwardEvent(Event event) {
 }
 
 void InputController::run() {
-    GLFWwindow *window;
-    glfwSetErrorCallback(error_callback);
-    if (!glfwInit())
-        exit(EXIT_FAILURE);
-    window = glfwCreateWindow(10, 10, "Simple example", NULL, NULL);
-    if (!window) {
-        glfwTerminate();
-        exit(EXIT_FAILURE);
+
+    bool ticking = false;
+
+    while(true) {
+        usleep(10000);
+
+        if(ticking) {
+            if(buttons[MODE_BUTTON_IN] && !buttons[START_STOP_BUTTON_IN] && !buttons[SET_BUTTON_IN]) {
+                forwardEvent(MODE_TICK);
+                usleep(1000000);
+                continue;
+            } else {
+                ticking = false;
+                continue;
+            }
+        }
+
+        // if any buttons are down
+        if(buttons[SET_BUTTON_IN] || buttons[MODE_BUTTON_IN] || buttons[START_STOP_BUTTON_IN]) {
+            // wait for a moderate amount of time for inputs to settle
+            usleep(200000);
+        }
+
+        // what event is this
+
+
+        // ALL THREE
+        if(buttons[SET_BUTTON_IN] && buttons[MODE_BUTTON_IN] && buttons[START_STOP_BUTTON_IN]) {
+            if(waitTwoValidate(true, true, true)) {
+                forwardEvent(FULL_RESET);
+                waitForClear();
+            }
+
+            continue;
+        }
+
+        // MODE AND START STOP
+        if(buttons[MODE_BUTTON_IN] && buttons[START_STOP_BUTTON_IN]) {
+            if(waitTwoValidate(false, true, true)) {
+                forwardEvent(RESET_TRIP);
+                waitForClear();
+            }
+
+            continue;
+        }
+
+        // ONLY MODE
+        if(buttons[MODE_BUTTON_IN] && !buttons[START_STOP_BUTTON_IN] && !buttons[SET_BUTTON_IN]) {
+            if(waitTwoValidate(false, true, false)) {
+                ticking = true;
+            } else {
+                forwardEvent(MODE_BUTTON);
+                std::cout << "MODE BUTTON" << std::endl;
+            }
+
+            continue;
+        }
+
+
+        // ONLY SET
+        if(buttons[SET_BUTTON_IN] && !buttons[START_STOP_BUTTON_IN] && !buttons[MODE_BUTTON_IN]) {
+            forwardEvent(SET_BUTTON);
+            waitForClear();
+            continue;
+
+        }
+
+        // ONLY START STOP
+        if(buttons[START_STOP_BUTTON_IN] && !buttons[SET_BUTTON_IN] && !buttons[MODE_BUTTON_IN]) {
+            forwardEvent(START_STOP_BUTTON);
+            waitForClear();
+            continue;
+
+        }
+
     }
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-    glfwSetKeyCallback(window, key_callback);
-
-    while (!glfwWindowShouldClose(window)) {
-
-        float ratio;
-
-        int width, height;
-
-        glfwGetFramebufferSize(window, &width, &height);
-
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
-
-    glfwDestroyWindow(window);
-    glfwTerminate();
-
-    exit(EXIT_SUCCESS);
 }
 
-void InputController::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+bool InputController::waitTwoValidate(bool set, bool mode, bool startStop) {
 
-    if (key == GLFW_KEY_1 && action == GLFW_RELEASE)
-        forwardEvent(MODE_BUTTON);
+    timeval startTV, endTV;
 
-    if (key == GLFW_KEY_2 && action == GLFW_RELEASE)
-        forwardEvent(SET_BUTTON);
+    gettimeofday(&startTV, NULL);
+    gettimeofday(&endTV, NULL);
 
-    if (key == GLFW_KEY_3 && action == GLFW_RELEASE)
-        forwardEvent(START_STOP_BUTTON);
+    while((endTV.tv_sec * 1e6 + endTV.tv_usec - (startTV.tv_sec * 1e6 + startTV.tv_usec)) <= 2000000 - 200000) {
+        if(buttons[SET_BUTTON_IN] == set && buttons[MODE_BUTTON_IN] == mode && buttons[START_STOP_BUTTON_IN] == startStop) {
+        } else {
+            return false;
+        }
+        usleep(10000);
+        gettimeofday(&endTV, NULL);
+    }
 
-    if (key == GLFW_KEY_0 && action == GLFW_RELEASE)
-        forwardEvent(PULSE);
+    return true;
 }
+
+bool InputController::waitForClear() {
+    while(buttons[SET_BUTTON_IN] || buttons[MODE_BUTTON_IN] || buttons[START_STOP_BUTTON_IN]) {
+        usleep(10000);
+    }
+}
+
 
 
